@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="160dp"
+    android:layout_height="160dp"
+    android:layout_marginBottom="24dp"
+    android:layout_marginStart="24dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivTrack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivSinger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_item_track_singer"
+                app:layout_constraintBottom_toTopOf="@id/vColor"
+                app:layout_constraintHeight="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth="12dp" />
+
+            <TextView
+                android:maxEms="6"
+                android:singleLine="true"
+                android:id="@+id/tvNameSinger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="123123123"
+                android:textColor="@color/all_white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/ivSinger"
+                app:layout_constraintStart_toEndOf="@+id/ivSinger"
+                app:layout_constraintTop_toTopOf="@+id/ivSinger" />
+
+            <ImageView
+                android:id="@+id/ivListens"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_item_track_listens"
+                app:layout_constraintBottom_toTopOf="@id/ivSinger"
+                app:layout_constraintHeight="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth="12dp" />
+
+            <TextView
+                android:id="@+id/tvListens"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="123123"
+                android:textColor="@color/all_white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/ivListens"
+                app:layout_constraintStart_toEndOf="@+id/ivListens"
+                app:layout_constraintTop_toTopOf="@+id/ivListens" />
+            <TextView
+                android:maxEms="6"
+                android:singleLine="true"
+                android:text="123123"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@color/all_white"
+                android:layout_margin="8dp"
+                android:id="@+id/tvNameTrack"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <View
+                android:id="@+id/vColor"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/primary_color"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</androidx.cardview.widget.CardView>

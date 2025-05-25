@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_dialog_setting_language"
+    android:padding="4dp">
+
+    <TextView
+        android:id="@+id/tvEnglish"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:drawablePadding="12dp"
+        android:gravity="start"
+        android:padding="10dp"
+        android:text="@string/setting_language_english"
+        android:textColor="@color/all_white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="120dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="12dp"
+        android:background="#888888"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEnglish" />
+
+    <TextView
+        android:id="@+id/tvKorean"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:drawablePadding="12dp"
+        android:gravity="start"
+        android:padding="8dp"
+        android:text="@string/setting_language_korean"
+        android:textColor="@color/all_white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="120dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="12dp"
+        android:background="#888888"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvKorean" />
+
+    <TextView
+        android:id="@+id/tvFrench"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:drawablePadding="12dp"
+        android:gravity="start"
+        android:padding="8dp"
+        android:text="@string/setting_language_french"
+        android:textColor="@color/all_white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="120dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="12dp"
+        android:background="#888888"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvFrench" />
+
+    <TextView
+        android:id="@+id/tvVietnamese"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:drawablePadding="12dp"
+        android:gravity="start"
+        android:padding="8dp"
+        android:text="@string/setting_language_vietnamese"
+        android:textColor="@color/all_white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

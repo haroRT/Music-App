@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name" translatable="false">haonv</string>
+    <string name="login_title_text">Login to your account</string>
+    <string name="login_username_field">Username</string>
+    <string name="login_password_field">Password</string>
+    <string name="login_remember_text">Remember me</string>
+    <string name="login_button_text">Log in</string>
+    <string name="login_not_account_text">Don\'t have account? <font color='#06A0B5'>Signup</font> </string>
+    <string name="login_signup_text">Sign up</string>
+    <string name="signup_title_text">Sign up</string>
+    <string name="signup_username_field">Username</string>
+    <string name="signup_password_field">Password</string>
+    <string name="signup_confirm_password_field">Confirm password</string>
+    <string name="signup_email_field">Email</string>
+    <string name="signup_btn_text">Sign up</string>
+    <string name="nav_home_text">Home</string>
+    <string name="nav_library_text">Library</string>
+    <string name="nav_playlist_text">Playlist</string>
+    <string name="playlist_title">My Playlist</string>
+    <string name="library_text_bottom_select">Local</string>
+    <string name="library_text_bottom_unselect">Remote</string>
+    <string name="player_title">Now playing</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="library_text_title">Library</string>
+    <string name="home_text_see_all"><u>See all</u></string>
+    <string name="profile_title_text">Profile</string>
+    <string name="profile_logout_text">Log Out</string>
+    <string name="setting_title_text">Settings</string>
+    <string name="setting_language_text">Language</string>
+    <string name="album_title_text">Top Albums</string>
+    <string name="artist_title_text">Top Artists</string>
+    <string name="track_title_text">Top Tracks</string>
+    <string name="dialog_playlist_add">New Playlist</string>
+    <string name="dialog_playlist_text_holder">Give your playlist a title</string>
+    <string name="dialog_playlist_cancel_text">Cancel</string>
+    <string name="dialog_playlist_create_text">Create</string>
+    <string name="popup_playlist_text_add">Add to playlist</string>
+    <string name="popup_playlist_text_share">Share</string>
+    <string name="popup_playlist_remove_text">Remove Playlist</string>
+    <string name="popup_playlist_rename_text">Rename</string>
+    <string name="popup_playlist_detail_remove_text">Remove from playlist</string>
+    <string name="popup_playlist_detail_share">Share</string>
+    <string name="dialog_playlist_choose">Choose playlist</string>
+    <string name="dialog_playlist_empty">You don\'t have any \n playlists. Click \n the “+” button to add</string>
+    <string name="setting_language_english">English</string>
+    <string name="setting_language_korean">Korean</string>
+    <string name="setting_language_french">French</string>
+    <string name="setting_language_vietnamese">Vietnamese</string>
+    <string name="home_wellcome">Welcome back !</string>
+    <string name="home_ranking">Rankings</string>
+    <string name="home_track">Top Tracks</string>
+    <string name="home_artist">Top Artists</string>
+    <string name="all_try_again">Try again</string>
+    <string name="all_network_error">No internet connection,\n please check your \n connection again</string>
+    <string name="home_album">Top Albums</string>
+    <string name="notification_apero_music" translatable="false" >Apero Music</string>
+</resources>

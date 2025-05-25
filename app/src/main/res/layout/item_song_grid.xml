@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cslSongGrid"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        app:shapeAppearanceOverlay="@style/borderround"
+        android:scaleType="centerCrop"
+        android:id="@+id/ivLogoSong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth="120dp"
+        app:layout_constraintHeight="120dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:maxEms="8"
+        android:singleLine="true"
+        android:id="@+id/tvItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textColor="@color/all_white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogoSong"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tvItemAuthor"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:maxEms="8"
+        android:singleLine="true"
+        android:layout_height="wrap_content"
+        android:textColor="@color/playlist_author_text"
+        app:layout_constraintTop_toBottomOf="@+id/tvItemTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvItemAuthor"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivMoreOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@color/bg_ic_more_option"
+        android:src="@drawable/ic_playlist_option"
+        app:layout_constraintTop_toTopOf="@+id/ivLogoSong"
+        app:layout_constraintEnd_toEndOf="@+id/ivLogoSong" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

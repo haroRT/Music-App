@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llSignin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/logo_primary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLoginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_title_text"
+        android:textColor="@color/all_white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+
+    <EditText
+        android:id="@+id/edtSignInUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/border_edittext"
+        android:drawableStart="@drawable/ic_auth_username"
+        android:drawablePadding="12dp"
+        android:hint="@string/login_username_field"
+        android:minHeight="48dp"
+        android:padding="8dp"
+        android:textColor="@color/all_white"
+        android:textColorHint="@color/all_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginTitle" />
+
+    <TextView
+        android:id="@+id/txtValidateSignInUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/all_error_text"
+        app:layout_constraintStart_toStartOf="@+id/edtSignInUsername"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignInUsername" />
+
+    <EditText
+        android:id="@+id/edtSignInPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/border_edittext"
+        android:drawableStart="@drawable/ic_auth_email"
+        android:drawableEnd="@drawable/ic_auth_password_invisible"
+        android:drawablePadding="12dp"
+        android:hint="@string/login_password_field"
+        android:minHeight="48dp"
+        android:padding="8dp"
+        android:textColor="@color/all_white"
+        android:textColorHint="@color/all_white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtValidateSignInUsername" />
+
+    <TextView
+        android:id="@+id/txtValidateSignInPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/all_error_text"
+        app:layout_constraintStart_toStartOf="@+id/edtSignInPassword"
+        app:layout_constraintTop_toBottomOf="@id/edtSignInPassword" />
+
+    <CheckBox
+        android:id="@+id/chkRememberMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/login_remember_text"
+        android:textColor="@color/all_white"
+        app:layout_constraintStart_toStartOf="@id/txtValidateSignInPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtValidateSignInPassword" />
+
+    <Button
+        android:id="@+id/btnSignin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/primary_color"
+        android:text="@string/login_title_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chkRememberMe" />
+
+    <TextView
+        android:id="@+id/txtToSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="@string/login_not_account_text"
+        android:textColor="@color/all_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

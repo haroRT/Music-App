@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name" translatable="false">haonv</string>
+    <string name="login_title_text">Connectez-vous à votre compte</string>
+    <string name="login_username_field">Nom d\'utilisateur</string>
+    <string name="login_password_field">Mot de passe</string>
+    <string name="login_remember_text">Souviens-toi de moi</string>
+    <string name="login_button_text">Se connecter</string>
+    <string name="login_not_account_text">N\'avez-vous pas de compte\?<font color='#06A0B5'>S\'inscrire</font> </string>
+    <string name="login_signup_text">S\'inscrire</string>
+    <string name="signup_title_text">S\'inscrire</string>
+    <string name="signup_username_field">Nom d\'utilisateur</string>
+    <string name="signup_password_field">Mot de passe</string>
+    <string name="signup_confirm_password_field">Confirmez le mot de passe</string>
+    <string name="signup_email_field">E-mail</string>
+    <string name="signup_btn_text">S\'inscrire</string>
+    <string name="nav_home_text">Maison</string>
+    <string name="nav_library_text">Bibliothèque</string>
+    <string name="nav_playlist_text">Playlist</string>
+    <string name="playlist_title">Ma playlist</string>
+    <string name="library_text_bottom_select">Locale</string>
+    <string name="library_text_bottom_unselect">Télécommande</string>
+    <string name="player_title">Jouer maintenant</string>
+    <string name="title_activity_fullscreen">Plein écran</string>
+    <string name="dummy_button">Bouton factice</string>
+    <string name="dummy_content">Mannequin \n content</string>
+    <string name="library_text_title">Bibliothèque</string>
+    <string name="home_text_see_all"><u>Voir tout</u></string>
+    <string name="profile_title_text">Profil</string>
+    <string name="profile_logout_text">Déconnecter</string>
+    <string name="setting_title_text">Paramètres</string>
+    <string name="setting_language_text">Langue</string>
+    <string name="album_title_text">Meilleurs albums</string>
+    <string name="artist_title_text">Top artistes</string>
+    <string name="track_title_text">Top Tracks</string>
+    <string name="dialog_playlist_add">Nouvelle liste de lecture</string>
+    <string name="dialog_playlist_text_holder">Donnez un titre à votre playlist</string>
+    <string name="dialog_playlist_cancel_text">Annuler</string>
+    <string name="dialog_playlist_create_text">Créer</string>
+    <string name="popup_playlist_text_add">Ajouter à la playlist</string>
+    <string name="popup_playlist_text_share">Partager</string>
+    <string name="popup_playlist_remove_text">Supprimer la playlist</string>
+    <string name="popup_playlist_rename_text">Rebaptiser</string>
+    <string name="popup_playlist_detail_remove_text">Supprimer de la playlist</string>
+    <string name="popup_playlist_detail_share">Partager</string>
+    <string name="dialog_playlist_choose">Choisissez la playlist</string>
+    <string name="dialog_playlist_empty">Vous n\'avez pas de listes de lecture. Cliquez sur \n le bouton \"+\" à ajouter</string>
+    <string name="setting_language_english">Anglais</string>
+    <string name="setting_language_korean">coréen</string>
+    <string name="setting_language_french">Français</string>
+    <string name="setting_language_vietnamese">vietnamien</string>
+    <string name="home_wellcome">Content de te revoir !</string>
+    <string name="home_ranking">Classement</string>
+    <string name="home_track">Morceaux populaires</string>
+    <string name="home_artist">Artistes populaires</string>
+    <string name="all_try_again">Essayer à nouveau</string>
+    <string name="all_network_error">Pas de connexion Internet, \n Veuillez vérifier à nouveau votre connexion \n</string>
+    <string name="home_album">Meilleurs albums</string>
+    <string name="notification_apero_music" translatable="false" >Apero Music</string>
+</resources>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="116dp"
+    android:layout_margin="0dp"
+    android:padding="0dp"
+    android:background="@color/grey_bg_notification">
+
+    <ImageView
+        android:id="@+id/ivImageNotification"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_notification_music" />
+
+    <TextView
+        android:id="@+id/tvTitleNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/ivImageNotification"
+        android:layout_alignTop="@+id/ivImageNotification"
+        android:layout_alignBottom="@+id/ivImageNotification"
+        android:gravity="center_vertical"
+        android:text="@string/notification_apero_music"
+        android:textColor="@color/all_white" />
+
+    <TextView
+        android:id="@+id/tvCurrentPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_toEndOf="@+id/tvTitleNotification"
+        android:layout_alignTop="@+id/tvTitleNotification"
+        android:layout_alignBottom="@+id/tvTitleNotification"
+        android:gravity="center_vertical"
+        android:textColor="@color/all_white" />
+
+    <TextView
+        android:maxEms="4"
+        android:singleLine="true"
+        android:id="@+id/tvNotificationTitleSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/ivImageNotification"
+        android:textColor="@color/all_white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvSinger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNotificationTitleSong"
+        android:layout_alignStart="@+id/tvNotificationTitleSong"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/all_white" />
+
+    <ImageView
+        android:id="@+id/ivThumbnail"
+        android:layout_width="116dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:foreground="@drawable/bg_gradient"/>
+
+    <ImageView
+        android:id="@+id/ivCloseService"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="32dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_musicbar_notification_close" />
+
+    <ImageView
+        android:id="@+id/ivNextSong"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="28dp"
+        android:layout_toStartOf="@+id/ivCloseService"
+        android:src="@drawable/ic_player_notification_next" />
+
+    <ImageView
+        android:id="@+id/ivControl"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="28dp"
+        android:layout_toStartOf="@+id/ivNextSong"
+        android:src="@drawable/ic_musicbar_notification_pause" />
+
+    <ImageView
+        android:id="@+id/ivPreviousSong"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="28dp"
+        android:layout_toStartOf="@+id/ivControl"
+        android:src="@drawable/ic_player_notification_previous" />
+
+</RelativeLayout>

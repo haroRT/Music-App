@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_playlist"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvTitlePlayList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="16dp"
+        android:text="@string/playlist_title"
+        android:textColor="@color/all_white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivVisiblePopup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_playlist_add"
+        app:layout_constraintBottom_toTopOf="@+id/rvPlayList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight="24dp"
+        app:layout_constraintWidth="24dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPlayList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/bg_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitlePlayList" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grAddPlaylist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tvPlayListEmpty, ivAddPlaylist" />
+
+    <TextView
+        android:id="@+id/tvPlayListEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:breakStrategy="simple"
+        android:gravity="center"
+        android:text="@string/dialog_playlist_empty"
+        android:textColor="@color/all_white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivAddPlaylist"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_playlist_addplaylist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPlayListEmpty" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

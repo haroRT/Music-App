@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primary_color">#06A0B5</color>
+    <color name="bg_color">#FF000000</color>
+    <color name="all_white">#FFFFFFFF</color>
+    <color name="all_error_text">#FF0000</color>
+    <color name="playlist_author_text">#8A9A9D</color>
+    <color name="bg_ic_more_option">#000000B2</color>
+    <color name="bg_btn_unselect">#1E1E1E</color>
+    <color name="player_light_skyblue">#7CEEFF</color>
+    <color name="player_light_grey">#8A9A9D</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="library_btn_select">#00C2CB</color>
+    <color name="library_btn_unselect">#1E1E1E</color>
+    <color name="grey_bg_musicbar">#292929</color>
+    <color name="grey_bg_song_select">#33C1C1C1</color>
+    <color name="grey_bg_dialog_select_playlist">#292929</color>
+    <color name="grey_bg_notification">#464646</color>
+    <color name="grey_text_home_username">#8A9A9D</color>
+    <color name="light_blue_text_ranking">#00DBFC</color>
+    <color name="light_blue_home_text_see_more">#00C2CB</color>
+    <color name="grey_bg_album">#33436369</color>
+    <color name="light_red_track">#FF7777</color>
+    <color name="yellow_track">#FFFA77</color>
+    <color name="blue_track">#4462FF</color>
+    <color name="green_track">#14FF00</color>
+    <color name="purple_track">#E231FF</color>
+    <color name="cyan_track">#00FFFF</color>
+    <color name="red_track">#FB003C</color>
+    <color name="light_track">#F2A5FF</color>
+    <color name="grey_bg_cammera">#B2000000</color>
+    <color name="red_text_logout">#D00000</color>
+    <color name="grey_stick_logout">#525252</color>
+</resources>

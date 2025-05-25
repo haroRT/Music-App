@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name" translatable="false">haonv</string>
+    <string name="login_title_text">Đăng nhập vào tài khoản của bạn</string>
+    <string name="login_username_field">Tên người dùng</string>
+    <string name="login_password_field">Mật khẩu</string>
+    <string name="login_remember_text">Nhớ tôi</string>
+    <string name="login_button_text">Đăng nhập</string>
+    <string name="login_not_account_text">Không có tài khoản?<font color='#06A0B5'>Đăng ký</font> </string>
+    <string name="login_signup_text">Đăng ký</string>
+    <string name="signup_title_text">Đăng ký</string>
+    <string name="signup_username_field">Tên người dùng</string>
+    <string name="signup_password_field">Mật khẩu</string>
+    <string name="signup_confirm_password_field">Xác nhận mật khẩu</string>
+    <string name="signup_email_field">E-mail</string>
+    <string name="signup_btn_text">Đăng ký</string>
+    <string name="nav_home_text">Trang chủ</string>
+    <string name="nav_library_text">Thư viện</string>
+    <string name="nav_playlist_text">Danh sách phát</string>
+    <string name="playlist_title">Danh sách phát của tôi</string>
+    <string name="library_text_bottom_select">Địa phương</string>
+    <string name="library_text_bottom_unselect">Xa</string>
+    <string name="player_title">Hiện đang chơi</string>
+    <string name="title_activity_fullscreen">Toàn màn hình</string>
+    <string name="dummy_button">Nút giả</string>
+    <string name="dummy_content">Giả \ ncontent</string>
+    <string name="library_text_title">Thư viện</string>
+    <string name="home_text_see_all"><u>Xem tất cả</u></string>
+    <string name="profile_title_text">Hồ sơ</string>
+    <string name="profile_logout_text">Đăng xuất</string>
+    <string name="setting_title_text">Cài đặt</string>
+    <string name="setting_language_text">Ngôn ngữ</string>
+    <string name="album_title_text">Album hàng đầu</string>
+    <string name="artist_title_text">Nghệ sĩ hàng đầu</string>
+    <string name="track_title_text">Đường đua hàng đầu</string>
+    <string name="dialog_playlist_add">Danh sách phát mới</string>
+    <string name="dialog_playlist_text_holder">Cung cấp cho danh sách phát của bạn một tiêu đề</string>
+    <string name="dialog_playlist_cancel_text">Hủy bỏ</string>
+    <string name="dialog_playlist_create_text">Tạo nên</string>
+    <string name="popup_playlist_text_add">Thêm vào danh sách phát</string>
+    <string name="popup_playlist_text_share">Chia sẻ</string>
+    <string name="popup_playlist_remove_text">Xóa danh sách phát</string>
+    <string name="popup_playlist_rename_text">Đổi tên</string>
+    <string name="popup_playlist_detail_remove_text">Hủy bỏ khỏi danh sách phát</string>
+    <string name="popup_playlist_detail_share">Chia sẻ</string>
+    <string name="dialog_playlist_choose">Chọn danh sách phát</string>
+    <string name="dialog_playlist_empty">Bạn không có danh sách phát \ n. Nhấp vào \ n nút \"+\" để thêm</string>
+    <string name="setting_language_english">Tiếng Anh</string>
+    <string name="setting_language_korean">Hàn Quốc</string>
+    <string name="setting_language_french">Tiếng Pháp</string>
+    <string name="setting_language_vietnamese">Việt Nam</string>
+    <string name="home_wellcome">Chào mừng trở lại!</string>
+    <string name="home_ranking">Thứ hạng</string>
+    <string name="home_track">Đường đua hàng đầu</string>
+    <string name="home_artist">Nghệ sĩ hàng đầu</string>
+    <string name="all_try_again">Hãy thử lại</string>
+    <string name="all_network_error">No internet connection,\n please check your \n connection again</string>
+    <string name="home_album">Album hàng đầu</string>
+    <string name="notification_apero_music" translatable="false" >Apero Music</string>
+</resources>

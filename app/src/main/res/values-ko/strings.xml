@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name" translatable="false">haonv</string>
+    <string name="login_title_text">계정에 로그인하십시오</string>
+    <string name="login_username_field">사용자 이름</string>
+    <string name="login_password_field">비밀번호</string>
+    <string name="login_remember_text">나를 기억하십시오</string>
+    <string name="login_button_text">로그인하십시오</string>
+    <string name="login_not_account_text">계정이 없습니까\?<font color='#06A0B5'>가입</font> </string>
+    <string name="login_signup_text">가입하십시오</string>
+    <string name="signup_title_text">가입하십시오</string>
+    <string name="signup_username_field">사용자 이름</string>
+    <string name="signup_password_field">비밀번호</string>
+    <string name="signup_confirm_password_field">비밀번호를 확인하십시오</string>
+    <string name="signup_email_field">이메일</string>
+    <string name="signup_btn_text">가입하십시오</string>
+    <string name="nav_home_text">집</string>
+    <string name="nav_library_text">도서관</string>
+    <string name="nav_playlist_text">재생 목록</string>
+    <string name="playlist_title">내 재생 목록</string>
+    <string name="library_text_bottom_select">현지의</string>
+    <string name="library_text_bottom_unselect">원격</string>
+    <string name="player_title">이제 연주합니다</string>
+    <string name="title_activity_fullscreen">FullScreenactivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">더미 \ ncontent</string>
+    <string name="library_text_title">도서관</string>
+    <string name="home_text_see_all"><u>모두 보기</u></string>
+    <string name="profile_title_text">프로필</string>
+    <string name="profile_logout_text">로그아웃</string>
+    <string name="setting_title_text">설정</string>
+    <string name="setting_language_text">언어</string>
+    <string name="album_title_text">인기 앨범</string>
+    <string name="artist_title_text">인기 아티스트</string>
+    <string name="track_title_text">인기 트랙</string>
+    <string name="dialog_playlist_add">새 플레이리스트</string>
+    <string name="dialog_playlist_text_holder">플레이리스트 제목을 입력하세요</string>
+    <string name="dialog_playlist_cancel_text">취소</string>
+    <string name="dialog_playlist_create_text">생성</string>
+    <string name="popup_playlist_text_add">플레이리스트에 추가</string>
+    <string name="popup_playlist_text_share">공유</string>
+    <string name="popup_playlist_remove_text">플레이리스트 삭제</string>
+    <string name="popup_playlist_rename_text">이름 변경</string>
+    <string name="popup_playlist_detail_remove_text">플레이리스트에서 제거</string>
+    <string name="popup_playlist_detail_share">공유</string>
+    <string name="dialog_playlist_choose">플레이리스트 선택</string>
+    <string name="dialog_playlist_empty">저장된 \n 플레이리스트가 없습니다. \n “+” 버튼을 눌러 추가하세요</string>
+    <string name="setting_language_english">영어</string>
+    <string name="setting_language_korean">한국어</string>
+    <string name="setting_language_french">프랑스어</string>
+    <string name="setting_language_vietnamese">베트남어</string>
+    <string name="home_wellcome">다시 오신 걸 환영합니다!</string>
+    <string name="home_ranking">랭킹</string>
+    <string name="home_track">인기 트랙</string>
+    <string name="home_artist">인기 아티스트</string>
+    <string name="all_try_again">다시 시도</string>
+    <string name="all_network_error">인터넷 연결이 없습니다.\n 네트워크를 확인하고 \n 다시 시도하세요</string>
+    <string name="home_album">인기 앨범</string>
+    <string name="notification_apero_music" translatable="false" >Apero Music</string>
+</resources>
