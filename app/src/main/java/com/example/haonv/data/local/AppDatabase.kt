@@ -28,4 +28,17 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun playlistDao(): PlaylistDao
     abstract fun songDao(): SongDao
     abstract fun playlistSongDao(): PlaylistSongDao
+
+    companion object {
+        @Volatile private var instance: AppDatabase? = null
+
+        fun getDatabase(context: Context): AppDatabase =
+            instance ?: synchronized(this) {
+                instance ?: Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "app_database"
+                ).build().also { instance = it }
+            }
+    }
 }

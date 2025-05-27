@@ -17,117 +17,66 @@ import com.example.haonv.R
 import com.example.haonv.SharedPref
 import com.example.haonv.adapter.PlaylistAdapter
 import com.example.haonv.adapter.SongAdapter
+import com.example.haonv.base.BaseFragment
 import com.example.haonv.data.local.entity.Song
 import com.example.haonv.databinding.DialogAddSongToPlaylistBinding
 import com.example.haonv.databinding.DialogSelectPlaylistBinding
 import com.example.haonv.databinding.FragmentLibraryBinding
+import com.example.haonv.di.DIContainer.viewModelContainer
 import com.example.haonv.ui.main.MainViewModel
 import com.example.haonv.ui.playlist.PlaylistFragment
 
-class LibraryFragment : Fragment() {
-    private var _binding: FragmentLibraryBinding? = null
-    private val binding get() = _binding!!
-    private val libraryViewModel: LibraryViewModel by viewModels {
-        LibraryViewModel.LibraryViewModelFactory(requireActivity().application as App)
+class LibraryFragment : BaseFragment<FragmentLibraryBinding>() {
+
+    private val libraryViewModel: LibraryViewModel by lazy {
+        viewModelContainer.getViewModel(
+            this,
+            LibraryViewModel::class.java
+        )
     }
     private var currentPopupWindow: PopupWindow? = null
     private lateinit var adapter: SongAdapter
     private val mainViewModel: MainViewModel by activityViewModels()
 
-
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLibraryBinding.inflate(inflater, container, false)
-        return binding.root
+        container: ViewGroup?
+    ): FragmentLibraryBinding {
+        return FragmentLibraryBinding.inflate(inflater, container, false)
     }
 
-    fun showPopupSong(view: View, position: Int, song: Song) {
+    override fun setupUI() {
+        super.setupUI()
 
-        val binding = DialogAddSongToPlaylistBinding.inflate(LayoutInflater.from(requireContext()))
-
-        val popupWindow = PopupWindow(
-            binding.root,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        binding.tvAddToPlaylist.setOnClickListener {
-            showPopupSelectPlaylist(view, position, song)
-            popupWindow.dismiss()
-        }
-        popupWindow.apply {
-            isFocusable = true
-            isOutsideTouchable = true
-        }
-        currentPopupWindow?.dismiss()
-        currentPopupWindow = popupWindow
-        popupWindow.showAsDropDown(
-            view,
-            view.width - 600,
-            12
-        )
+        adapter = SongAdapter(mutableListOf())
+        binding.rvLibrary.adapter = adapter
+        binding.rvLibrary.layoutManager = LinearLayoutManager(context)
     }
 
-
-    fun showPopupSelectPlaylist(view: View, position: Int, song: Song) {
-
-        val binding = DialogSelectPlaylistBinding.inflate(LayoutInflater.from(requireContext()))
-
-        val popupWindow = PopupWindow(
-            binding.root,
-            1000,
-            1200
-        )
-
-        popupWindow.apply {
-            isFocusable = true
-            isOutsideTouchable = true
-        }
-        libraryViewModel.getPlaylistByUserId(SharedPref.userId)
-        libraryViewModel.playlists.observe(viewLifecycleOwner, {
-            if (it.isEmpty()){
-                binding.grAddPlaylist.visibility = View.VISIBLE
-                binding.rvPlayList.visibility = View.INVISIBLE
-            } else {
-                binding.grAddPlaylist.visibility = View.INVISIBLE
-                binding.rvPlayList.visibility = View.VISIBLE
-            }
-        })
-        libraryViewModel.playlists.observe(viewLifecycleOwner, {
-            val adapter = PlaylistAdapter(it)
-            adapter.setItemSelect(true)
-            adapter.setOnItemClickListener(object : PlaylistAdapter.OnItemClickListener {
-                override fun onItemClick(id: Int) {
-                    libraryViewModel.addSongToPlaylist(id, song.id, song)
-                    popupWindow.dismiss()
-                }
-            })
-            binding.rvPlayList.layoutManager = LinearLayoutManager(context)
-            binding.rvPlayList.adapter = adapter
-        })
-
-        binding.addPlaylistButton.setOnClickListener {
-            val playlistFragment = PlaylistFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.llMain, playlistFragment)
-                .addToBackStack(null)
-                .commit()
-            playlistFragment.arguments = Bundle().apply {
-                putBoolean("SHOW_POPUP", true)
-            }
-        }
-
-        currentPopupWindow?.dismiss()
-        currentPopupWindow = popupWindow
-        popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, 0)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupData() {
+        super.setupData()
         libraryViewModel.setIsLocal(true)
+    }
+
+    override fun setupListener() {
+        super.setupListener()
+
+        binding.btnLocal.setOnClickListener {
+            libraryViewModel.setIsLocal(true)
+        }
+        binding.btnRemote.setOnClickListener {
+            libraryViewModel.setIsLocal(false)
+        }
+
+        binding.btnTryAgain.setOnClickListener {
+            libraryViewModel.setIsErrorNetwork(false)
+            libraryViewModel.getListSongFromRemote()
+        }
+    }
+
+    override fun setupObserver() {
+        super.setupObserver()
+
         libraryViewModel.songs.observe(viewLifecycleOwner) {
             adapter = SongAdapter(it)
             if (libraryViewModel.song.value != null){
@@ -215,27 +164,91 @@ class LibraryFragment : Fragment() {
                 binding.rvLibrary.visibility = View.VISIBLE
             }
         }
+    }
 
-        binding.btnLocal.setOnClickListener {
-            libraryViewModel.setIsLocal(true)
+    fun showPopupSong(view: View, position: Int, song: Song) {
+
+        val binding = DialogAddSongToPlaylistBinding.inflate(LayoutInflater.from(requireContext()))
+
+        val popupWindow = PopupWindow(
+            binding.root,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        binding.tvAddToPlaylist.setOnClickListener {
+            showPopupSelectPlaylist(view, position, song)
+            popupWindow.dismiss()
         }
-        binding.btnRemote.setOnClickListener {
-            libraryViewModel.setIsLocal(false)
+        popupWindow.apply {
+            isFocusable = true
+            isOutsideTouchable = true
+        }
+        currentPopupWindow?.dismiss()
+        currentPopupWindow = popupWindow
+        popupWindow.showAsDropDown(
+            view,
+            view.width - 600,
+            12
+        )
+    }
+
+
+    fun showPopupSelectPlaylist(view: View, position: Int, song: Song) {
+
+        val binding = DialogSelectPlaylistBinding.inflate(LayoutInflater.from(requireContext()))
+
+        val popupWindow = PopupWindow(
+            binding.root,
+            1000,
+            1200
+        )
+
+        popupWindow.apply {
+            isFocusable = true
+            isOutsideTouchable = true
+        }
+        libraryViewModel.getPlaylistByUserId()
+        libraryViewModel.playlists.observe(viewLifecycleOwner, {
+            if (it.isEmpty()){
+                binding.grAddPlaylist.visibility = View.VISIBLE
+                binding.rvPlayList.visibility = View.INVISIBLE
+            } else {
+                binding.grAddPlaylist.visibility = View.INVISIBLE
+                binding.rvPlayList.visibility = View.VISIBLE
+            }
+        })
+        libraryViewModel.playlists.observe(viewLifecycleOwner, {
+            val adapter = PlaylistAdapter(it)
+            adapter.setItemSelect(true)
+            adapter.setOnItemClickListener(object : PlaylistAdapter.OnItemClickListener {
+                override fun onItemClick(id: Int) {
+                    libraryViewModel.addSongToPlaylist(id, song.id, song)
+                    popupWindow.dismiss()
+                }
+            })
+            binding.rvPlayList.layoutManager = LinearLayoutManager(context)
+            binding.rvPlayList.adapter = adapter
+        })
+
+        binding.addPlaylistButton.setOnClickListener {
+            val playlistFragment = PlaylistFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.llMain, playlistFragment)
+                .addToBackStack(null)
+                .commit()
+            playlistFragment.arguments = Bundle().apply {
+                putBoolean("SHOW_POPUP", true)
+            }
         }
 
-        binding.btnTryAgain.setOnClickListener {
-            libraryViewModel.setIsErrorNetwork(false)
-            libraryViewModel.getListSongFromRemote()
-        }
-
-        adapter = SongAdapter(mutableListOf())
-        binding.rvLibrary.adapter = adapter
-        binding.rvLibrary.layoutManager = LinearLayoutManager(context)
+        currentPopupWindow?.dismiss()
+        currentPopupWindow = popupWindow
+        popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, 0)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
         currentPopupWindow?.dismiss()
         currentPopupWindow = null
     }

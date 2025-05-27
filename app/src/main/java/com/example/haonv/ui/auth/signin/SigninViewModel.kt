@@ -1,14 +1,16 @@
 package com.example.haonv.ui.auth.signin
 
 import androidx.lifecycle.*
-import com.example.haonv.App
 import com.example.haonv.SharedPref
-import com.example.haonv.data.UserRepository
+import com.example.haonv.data.repository.UserRepository
 import com.example.haonv.data.local.entity.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SigninViewModel(application: App) : AndroidViewModel(application) {
+class SigninViewModel(
+    private val sharedPref: SharedPref,
+    private val repository: UserRepository
+) : ViewModel() {
     private val _validationUsernameMessage = MutableLiveData<String>()
     val validationMessage: LiveData<String> = _validationUsernameMessage
     private val _validationPasswordMessage = MutableLiveData<String>()
@@ -20,9 +22,6 @@ class SigninViewModel(application: App) : AndroidViewModel(application) {
     val loginState: LiveData<Boolean> = _loginState
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
-
-    private val repository: UserRepository = application.userRepository
-
 
     fun insert(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -67,12 +66,16 @@ class SigninViewModel(application: App) : AndroidViewModel(application) {
                     _validationUsernameMessage.postValue("Username does not exist")
                 } else if (userResult.password == password) {
                     _loginState.postValue(true)
-                    SharedPref.userId = userResult.id
+                    sharedPref.userId = userResult.id
                 } else {
                     _validationPasswordMessage.postValue("Incorrect password")
                 }
             }
         }
+    }
+
+    fun getSharedPref(): SharedPref {
+        return sharedPref
     }
 
 
@@ -88,14 +91,4 @@ class SigninViewModel(application: App) : AndroidViewModel(application) {
         _passwordVisible.value = _passwordVisible.value?.not() ?: false
     }
 
-    class SigninViewModelFactory(
-        private val application: App
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SigninViewModel::class.java)) {
-                return SigninViewModel(application) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 }

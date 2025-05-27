@@ -9,19 +9,29 @@ import android.widget.PopupWindow
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.haonv.SharedPref
+import com.example.haonv.base.BaseActivity
 import com.example.haonv.databinding.ActivitySettingBinding
 import com.example.haonv.databinding.DialogSettingLanguageBinding
+import com.example.haonv.di.DIContainer.viewModelContainer
 import com.example.haonv.ui.auth.signin.SigninActivity
 import com.example.haonv.ui.main.MainActivity
 import com.example.haonv.utils.Languages
 import java.util.Locale
 
-class SettingActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySettingBinding
-    private val settingViewModel: SettingViewModel by viewModels ()
-    private fun changeLanguage(languageCode: String) {
-        SharedPref.language = languageCode
+class SettingActivity : BaseActivity<ActivitySettingBinding>() {
+    private val settingViewModel: SettingViewModel by lazy {
+        viewModelContainer.getViewModel(
+            this,
+            SettingViewModel::class.java
+        )
+    }
 
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivitySettingBinding {
+        return ActivitySettingBinding.inflate(layoutInflater)
+    }
+    
+    private fun changeLanguage(languageCode: String) {
+        settingViewModel.setLanguageSharedPref(languageCode)
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
 
@@ -34,6 +44,7 @@ class SettingActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+    
     fun showPopupSong(view: View) {
 
         val binding = DialogSettingLanguageBinding.inflate(LayoutInflater.from(this))
@@ -76,28 +87,38 @@ class SettingActivity : AppCompatActivity() {
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySettingBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun setupUI() {
+        super.setupUI()
+        
+        binding.tvCurrentLanguage.text = Languages.getLanguageName(settingViewModel.getLanguage())
+    }
+    
+    override fun setupData() {
+        super.setupData()
+    }
 
-        binding.tvCurrentLanguage.text = Languages.getLanguageName(SharedPref.language)
+    override fun setupListener() {
+        super.setupListener()
 
         binding.ivBack.setOnClickListener {
             finish()
         }
 
         binding.ivConfirm.setOnClickListener {
-            SharedPref.language = settingViewModel.language.value!!
+            settingViewModel.setLanguageSharedPref(settingViewModel.language.value!!)
             changeLanguage(settingViewModel.language.value!!)
         }
 
         binding.tvCurrentLanguage.setOnClickListener {
             showPopupSong(binding.tvCurrentLanguage)
         }
+    }
+
+    override fun setupObserver() {
+        super.setupObserver()
 
         settingViewModel.language.observe(this, {
-            if(it != SharedPref.language){
+            if(it != settingViewModel.getLanguage()){
                 settingViewModel.setIsChanged(true)
             }
         })
@@ -110,4 +131,5 @@ class SettingActivity : AppCompatActivity() {
                 binding.ivConfirm.visibility = View.INVISIBLE
         })
     }
+
 }

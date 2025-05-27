@@ -19,8 +19,10 @@ import com.example.haonv.SharedPref
 import com.example.haonv.adapter.AlbumAdapter
 import com.example.haonv.adapter.ArtistAdapter
 import com.example.haonv.adapter.TrackAdapter
+import com.example.haonv.base.BaseFragment
 import com.example.haonv.data.remote.response.Album
 import com.example.haonv.databinding.FragmentHomeBinding
+import com.example.haonv.di.DIContainer.viewModelContainer
 import com.example.haonv.ui.home.detail.album.TopAlbumActivity
 import com.example.haonv.ui.home.detail.artist.TopArtistActivity
 import com.example.haonv.ui.home.detail.artist.TopArtistViewModel
@@ -28,29 +30,33 @@ import com.example.haonv.ui.home.detail.profile.ProfileActivity
 import com.example.haonv.ui.home.detail.setting.SettingActivity
 import com.example.haonv.ui.home.detail.track.TopTrackActivity
 
-class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-    private val homeViewModel: HomeViewModel by viewModels{
-        HomeViewModel.HomeViewModelFactory(requireActivity().application as App)
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+
+    private val homeViewModel: HomeViewModel by lazy {
+        viewModelContainer.getViewModel(
+            this,
+            HomeViewModel::class.java
+        )
     }
 
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View{
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        return binding.root
+        container: ViewGroup?
+    ): FragmentHomeBinding {
+        return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+
+    override fun setupData() {
+        super.setupData()
 
         homeViewModel.loadAllData()
 
-        homeViewModel.loadProfile(SharedPref.userId)
+        homeViewModel.loadProfile()
+    }
+
+    override fun setupListener() {
+        super.setupListener()
 
         binding.tvTopAlbumShowMore.setOnClickListener {
             startActivity(Intent(context, TopAlbumActivity::class.java))
@@ -75,6 +81,10 @@ class HomeFragment : Fragment() {
         binding.btnTryAgain.setOnClickListener {
             homeViewModel.loadAllData()
         }
+    }
+
+    override fun setupObserver() {
+        super.setupObserver()
 
         homeViewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
@@ -100,7 +110,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.albums.observe(viewLifecycleOwner,{
             val albumAdapter = AlbumAdapter(dataset = it, onClick = {
-                album ->  Log.i("album", "album: $album")
+                    album ->  Log.i("album", "album: $album")
             })
             albumAdapter.setLayoutType()
             binding.rvTopAlbum.layoutManager = GridLayoutManager(context, 2)
@@ -130,4 +140,5 @@ class HomeFragment : Fragment() {
             binding.tvUsername.text = it.username
         })
     }
+
 }

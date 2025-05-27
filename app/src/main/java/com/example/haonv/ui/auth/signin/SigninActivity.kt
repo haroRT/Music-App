@@ -11,6 +11,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,40 +21,41 @@ import androidx.core.content.ContextCompat
 import com.example.haonv.App
 import com.example.haonv.R
 import com.example.haonv.SharedPref
+import com.example.haonv.base.BaseActivity
 import com.example.haonv.databinding.ActivitySigninBinding
+import com.example.haonv.di.DIContainer.viewModelContainer
+import com.example.haonv.di.ViewModelContainer
 import com.example.haonv.ui.auth.signup.SignupActivity
+import com.example.haonv.ui.home.HomeViewModel
 import com.example.haonv.ui.main.MainActivity
 
 
-class SigninActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySigninBinding
-    private val signinViewModel: SigninViewModel by viewModels {
-        SigninViewModel.SigninViewModelFactory(application as App)
+class SigninActivity : BaseActivity<ActivitySigninBinding>() {
+
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivitySigninBinding {
+        return ActivitySigninBinding.inflate(layoutInflater)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySigninBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    private val signinViewModel: SigninViewModel by lazy {
+        viewModelContainer.getViewModel(
+            this,
+            SigninViewModel::class.java
+        )
+    }
+
+    override fun setupUI() {
+        super.setupUI()
         if (!checkPermissions()) {
             requestPermissions()
         }
-        signinViewModel.user.observe(this,{})
+        if (signinViewModel.getSharedPref().userName != "" && signinViewModel.getSharedPref().password != ""){
+            binding.edtSignInUsername.setText(signinViewModel.getSharedPref().userName)
+            binding.edtSignInPassword.setText(signinViewModel.getSharedPref().password)
+        }
+    }
 
-        signinViewModel.validationMessage.observe(this,{
-            binding.txtValidateSignInUsername.text = it
-        })
-
-        signinViewModel.validationPasswordMessage.observe(this,{
-            binding.txtValidateSignInPassword.text = it
-        })
-
-
-        signinViewModel.loginState.observe(this,{
-            if (it){
-                startActivity(Intent(this, MainActivity::class.java))
-            }
-        })
+    override fun setupListener() {
+        super.setupListener()
 
         binding.edtSignInUsername.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -83,21 +85,11 @@ class SigninActivity : AppCompatActivity() {
         }
         binding.chkRememberMe.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked == true){
-                SharedPref.userName = binding.edtSignInUsername.text.toString()
-                SharedPref.password = binding.edtSignInPassword.text.toString()
+                signinViewModel.getSharedPref().userName = binding.edtSignInUsername.text.toString()
+                signinViewModel.getSharedPref().password = binding.edtSignInPassword.text.toString()
             }
         }
 
-        if (SharedPref.userName != "" && SharedPref.password != ""){
-            binding.edtSignInUsername.setText(SharedPref.userName)
-            binding.edtSignInPassword.setText(SharedPref.password)
-        }
-
-        setupPasswordToggle()
-        observePasswordVisibility()
-    }
-
-    private fun setupPasswordToggle() {
         binding.edtSignInPassword.apply {
             setOnTouchListener { view, event ->
                 if (event.action == MotionEvent.ACTION_UP) {
@@ -114,7 +106,26 @@ class SigninActivity : AppCompatActivity() {
         }
     }
 
-    private fun observePasswordVisibility() {
+    override fun setupObserver() {
+        super.setupObserver()
+
+        signinViewModel.user.observe(this){}
+
+        signinViewModel.validationMessage.observe(this,{
+            binding.txtValidateSignInUsername.text = it
+        })
+
+        signinViewModel.validationPasswordMessage.observe(this,{
+            binding.txtValidateSignInPassword.text = it
+        })
+
+
+        signinViewModel.loginState.observe(this,{
+            if (it){
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+        })
+
         signinViewModel.passwordVisible.observe(this) { isVisible ->
             binding.edtSignInPassword.apply {
                 transformationMethod = if (isVisible) {
@@ -138,6 +149,7 @@ class SigninActivity : AppCompatActivity() {
             }
         }
     }
+
     private val PERMISSIONS_REQUEST_CODE = 100
 
     private fun requestPermissions() {
@@ -223,7 +235,4 @@ class SigninActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

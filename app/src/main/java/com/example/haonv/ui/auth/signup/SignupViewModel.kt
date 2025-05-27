@@ -1,18 +1,17 @@
 package com.example.haonv.ui.auth.signup
 
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.haonv.App
-import com.example.haonv.data.UserRepository
+import com.example.haonv.data.repository.UserRepository
 import com.example.haonv.data.local.entity.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SignupViewModel (application: App) : AndroidViewModel(application)  {
+class SignupViewModel (
+    private val repository: UserRepository
+) : ViewModel()  {
     private val _validationUsernameMessage = MutableLiveData<String>()
     val validationMessage: LiveData<String> = _validationUsernameMessage
 
@@ -33,8 +32,6 @@ class SignupViewModel (application: App) : AndroidViewModel(application)  {
 
     private val _signupState = MutableLiveData<Boolean>(false)
     val signupState: LiveData<Boolean> = _signupState
-
-    private val repository: UserRepository = application.userRepository
 
     fun validateUsername(username: String): Boolean {
         if (username.isEmpty()) return false
@@ -124,14 +121,4 @@ class SignupViewModel (application: App) : AndroidViewModel(application)  {
         _confirmPasswordVisible.value = _confirmPasswordVisible.value?.not() ?: false
     }
 
-    class SignupViewModelFactory(
-        private val application: App
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SignupViewModel::class.java)) {
-                return SignupViewModel(application) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 }

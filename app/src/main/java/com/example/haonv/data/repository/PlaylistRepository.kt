@@ -1,10 +1,9 @@
-package com.example.haonv.data
+package com.example.haonv.data.repository
 
 import com.example.haonv.data.local.dao.PlaylistDao
 import com.example.haonv.data.local.dao.PlaylistSongDao
 import com.example.haonv.data.local.entity.Playlist
 import com.example.haonv.data.local.entity.PlaylistSong
-import com.example.haonv.data.local.entity.User
 import com.example.haonv.data.local.model.PlaylistWithCountSong
 
 class PlaylistRepository(

@@ -1,31 +1,28 @@
 package com.example.haonv.ui.library
 
-import android.content.Context
-import android.provider.MediaStore
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.haonv.data.remote.ApiClient
-import com.example.haonv.App
-import com.example.haonv.data.SongRepository
-import com.example.haonv.data.local.entity.Playlist
+import com.example.haonv.SharedPref
+import com.example.haonv.data.repository.PlaylistRepository
+import com.example.haonv.data.repository.SongRepository
 import com.example.haonv.data.local.entity.Song
 import com.example.haonv.data.local.model.PlaylistWithCountSong
+import com.example.haonv.data.remote.ApiClient
 import com.example.haonv.data.remote.response.SongResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 import kotlin.random.Random
 
-class LibraryViewModel(application: App) : AndroidViewModel(application) {
-    val songRepository: SongRepository = application.songRepository
-    val playlistRepository = application.playlistRepository
+class LibraryViewModel(
+    private val sharedPref: SharedPref,
+    private val songRepository: SongRepository,
+    private val playlistRepository: PlaylistRepository
+) : ViewModel() {
 
     private val _songs: MutableLiveData<List<Song>> = MutableLiveData()
     val songs: LiveData<List<Song>> = _songs
@@ -116,9 +113,9 @@ class LibraryViewModel(application: App) : AndroidViewModel(application) {
         }
     }
 
-    fun getPlaylistByUserId(userId: Int) {
+    fun getPlaylistByUserId() {
         viewModelScope.launch(Dispatchers.IO) {
-            _playlists.postValue(playlistRepository.getPlaylistByUserId(userId))
+            _playlists.postValue(playlistRepository.getPlaylistByUserId(sharedPref.userId))
         }
     }
 
@@ -145,15 +142,4 @@ class LibraryViewModel(application: App) : AndroidViewModel(application) {
         _song.value = song
     }
 
-
-    class LibraryViewModelFactory(
-        private val application: App
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(LibraryViewModel::class.java)) {
-                return LibraryViewModel(application) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 }

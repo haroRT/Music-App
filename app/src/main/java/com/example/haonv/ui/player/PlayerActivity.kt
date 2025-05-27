@@ -7,17 +7,25 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.example.haonv.MusicService
 import com.example.haonv.R
+import com.example.haonv.base.BaseActivity
 import com.example.haonv.data.local.entity.Song
 import com.example.haonv.databinding.ActivityPlayerBinding
 import com.example.haonv.utils.formatDuration
+import kotlinx.coroutines.launch
 
-class PlayerActivity : AppCompatActivity(), MusicService.OnSongChanged {
-    private lateinit var binding: ActivityPlayerBinding
+class PlayerActivity : BaseActivity<ActivityPlayerBinding>(), MusicService.OnSongChanged {
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivityPlayerBinding {
+        return ActivityPlayerBinding.inflate(layoutInflater)
+    }
     private var musicService: MusicService? = null
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -60,10 +68,24 @@ class PlayerActivity : AppCompatActivity(), MusicService.OnSongChanged {
         return notifications.any { it.id == 1 }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityPlayerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun setupListener() {
+        super.setupListener()
+
+        binding.ivBack.setOnClickListener{
+            finish()
+        }
+        binding.ivDelete.setOnClickListener{
+            if (playerViewModel.isBound.value == true) {
+                unbindService(connection)
+                stopService(Intent(this, MusicService::class.java))
+                playerViewModel.setIsBound(false)
+            }
+            finish()
+        }
+    }
+
+    override fun setupObserver() {
+        super.setupObserver()
 
         playerViewModel.song.observe(this, {
             if (it != null) {
@@ -109,28 +131,21 @@ class PlayerActivity : AppCompatActivity(), MusicService.OnSongChanged {
             }
         })
 
-        binding.ivBack.setOnClickListener{
-            finish()
-        }
-        binding.ivDelete.setOnClickListener{
-            if (playerViewModel.isBound.value == true) {
-                unbindService(connection)
-                stopService(Intent(this, MusicService::class.java))
-                playerViewModel.setIsBound(false)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                if (isServiceRunning()) {
+                    if (playerViewModel.isBound.value == false) {
+                        val intent = Intent(this@PlayerActivity, MusicService::class.java)
+                        bindService(intent, connection, Context.BIND_AUTO_CREATE)
+                        playerViewModel.setIsBound(true)
+                    }
+                }
             }
-            finish()
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (isServiceRunning()) {
-            if (playerViewModel.isBound.value == false) {
-                val intent = Intent(this, MusicService::class.java)
-                bindService(intent, connection, Context.BIND_AUTO_CREATE)
-                playerViewModel.setIsBound(true)
-            }
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
     override fun onStop() {
