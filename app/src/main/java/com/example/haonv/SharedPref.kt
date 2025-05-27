@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 
-object SharedPref {
-    private lateinit var sharePref: SharedPreferences
+class SharedPref(context: Context) {
+    private val sharedPrefName = context.packageName + "music_app" + "_pref"
+    val sharePref =
+        context.applicationContext.getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
 
     object Key {
         const val USER_ID = "userId"
@@ -13,15 +15,6 @@ object SharedPref {
         const val USER_NAME = "userName"
         const val PASSWORD = "password"
         const val REMEMBER_LOGIN = "rememberLogin"
-    }
-
-    fun init(context: Context) {
-        if (!::sharePref.isInitialized) {
-            sharePref = context.applicationContext.getSharedPreferences(
-                "${context.packageName}_pref",
-                MODE_PRIVATE
-            )
-        }
     }
 
     fun clear() {

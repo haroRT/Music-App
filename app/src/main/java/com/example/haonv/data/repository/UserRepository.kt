@@ -1,4 +1,4 @@
-package com.example.haonv.data
+package com.example.haonv.data.repository
 
 import com.example.haonv.data.local.dao.UserDao
 import com.example.haonv.data.local.entity.User

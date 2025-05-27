@@ -11,12 +11,17 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.haonv.MusicService
 import com.example.haonv.R
+import com.example.haonv.base.BaseActivity
 import com.example.haonv.data.local.entity.Song
 import com.example.haonv.databinding.ActivityMainBinding
 import com.example.haonv.ui.home.HomeFragment
@@ -24,11 +29,15 @@ import com.example.haonv.ui.library.LibraryFragment
 import com.example.haonv.ui.player.PlayerActivity
 import com.example.haonv.ui.playlist.PlaylistFragment
 import com.example.haonv.utils.formatDuration
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 
-class MainActivity : AppCompatActivity(), MusicService.OnSongChanged, MusicService.UnbindCallback {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity<ActivityMainBinding>(), MusicService.OnSongChanged, MusicService.UnbindCallback {
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
+    }
+    private val mainViewModel: MainViewModel by viewModels()
     private var musicService: MusicService? = null
 
     private val connection = object : ServiceConnection {
@@ -94,15 +103,26 @@ class MainActivity : AppCompatActivity(), MusicService.OnSongChanged, MusicServi
         return notifications.any { it.id == 1 }
     }
 
-    private val mainViewModel: MainViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        if (savedInstanceState == null) {
-            loadFragment(HomeFragment())
+    fun startService() {
+        val intent = Intent(
+            this,
+            MusicService::class.java
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+            startService(intent)
         }
+        bindService(intent, connection, Context.BIND_AUTO_CREATE)
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.llMain, fragment)
+            .commit()
+    }
+
+    override fun setupListener() {
+        super.setupListener()
 
         binding.bnMain.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -134,6 +154,24 @@ class MainActivity : AppCompatActivity(), MusicService.OnSongChanged, MusicServi
             }
             mainViewModel.setMusicBarState(false)
         }
+
+        binding.ivControl.setOnClickListener {
+            if (musicService?.isPlaying == true) {
+                musicService?.pauseMusic()
+                mainViewModel.setIsPlaying(false)
+            } else {
+                musicService?.resumeMusic()
+                mainViewModel.setIsPlaying(true)
+            }
+        }
+
+        binding.cslMusicBar.setOnClickListener {
+            startActivity(Intent(this, PlayerActivity::class.java))
+        }
+    }
+
+    override fun setupObserver() {
+        super.setupObserver()
 
         mainViewModel.musicBarState.observe(this, {
             if (it) {
@@ -191,43 +229,36 @@ class MainActivity : AppCompatActivity(), MusicService.OnSongChanged, MusicServi
             }
         })
 
-        binding.ivControl.setOnClickListener {
-            if (musicService?.isPlaying == true) {
-                musicService?.pauseMusic()
-                mainViewModel.setIsPlaying(false)
-            } else {
-                musicService?.resumeMusic()
-                mainViewModel.setIsPlaying(true)
-            }
-        }
-
-        binding.cslMusicBar.setOnClickListener {
-            startActivity(Intent(this, PlayerActivity::class.java))
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (isServiceRunning()) {
-            if (mainViewModel.isBound.value == false) {
-                val intent = Intent(this, MusicService::class.java)
-                bindService(intent, connection, Context.BIND_AUTO_CREATE)
-                mainViewModel.setIsBound(true)
-            }
-        } else {
-            mainViewModel.setMusicBarState(false)
-            mainViewModel.setIsBound(false)
-            mainViewModel.setSong(null)
-        }
-        if (checkSelfPermission(Manifest.permission.READ_MEDIA_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
-                requestPermissions(arrayOf(Manifest.permission.READ_MEDIA_AUDIO), 200)
-            } else {
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 200)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                if (isServiceRunning()) {
+                    if (mainViewModel.isBound.value == false) {
+                        val intent = Intent(this@MainActivity, MusicService::class.java)
+                        bindService(intent, connection, Context.BIND_AUTO_CREATE)
+                        mainViewModel.setIsBound(true)
+                    }
+                } else {
+                    mainViewModel.setMusicBarState(false)
+                    mainViewModel.setIsBound(false)
+                    mainViewModel.setSong(null)
+                }
+                if (checkSelfPermission(Manifest.permission.READ_MEDIA_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+                        requestPermissions(arrayOf(Manifest.permission.READ_MEDIA_AUDIO), 200)
+                    } else {
+                        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 200)
+                    }
+                }
             }
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            loadFragment(HomeFragment())
+        }
+    }
 
     override fun onStop() {
         super.onStop()
@@ -239,24 +270,6 @@ class MainActivity : AppCompatActivity(), MusicService.OnSongChanged, MusicServi
 
     override fun onDestroy() {
         super.onDestroy()
-    }
-
-    fun startService() {
-        val intent = Intent(
-            this,
-            MusicService::class.java
-        )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent)
-            startService(intent)
-        }
-        bindService(intent, connection, Context.BIND_AUTO_CREATE)
-    }
-
-    private fun loadFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.llMain, fragment)
-            .commit()
     }
 
 }

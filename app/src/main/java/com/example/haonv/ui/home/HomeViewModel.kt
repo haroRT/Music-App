@@ -1,25 +1,26 @@
 package com.example.haonv.ui.home
 
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.haonv.App
+import com.example.haonv.SharedPref
+import com.example.haonv.data.repository.UserRepository
 import com.example.haonv.data.local.entity.User
 import com.example.haonv.data.remote.ApiClient
 import com.example.haonv.data.remote.response.Album
 import com.example.haonv.data.remote.response.Artist
 import com.example.haonv.data.remote.response.Track
-import com.example.haonv.ui.home.detail.profile.ProfileViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class HomeViewModel(application: App) : AndroidViewModel(application) {
+class HomeViewModel(
+    private val sharedPref: SharedPref,
+    private val userRepository: UserRepository
+) : ViewModel() {
     private val _albums = MutableLiveData<List<Album>>()
     val albums: LiveData<List<Album>> get() = _albums
 
@@ -37,8 +38,6 @@ class HomeViewModel(application: App) : AndroidViewModel(application) {
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> get() = _user
-
-    private val userRepository = application.userRepository
 
     private fun handleError(code: Int) {
         val errorMessage = when (code) {
@@ -114,20 +113,9 @@ class HomeViewModel(application: App) : AndroidViewModel(application) {
         }
     }
 
-    fun loadProfile(userId: Int) {
+    fun loadProfile() {
         viewModelScope.launch(Dispatchers.IO) {
-            _user.postValue(userRepository.getUserById(userId))
-        }
-    }
-
-    class HomeViewModelFactory(
-        private val application: App
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-                return HomeViewModel(application) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
+            _user.postValue(userRepository.getUserById(sharedPref.userId))
         }
     }
 }

@@ -7,46 +7,33 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.haonv.App
 import com.example.haonv.R
+import com.example.haonv.base.BaseActivity
 import com.example.haonv.databinding.ActivitySignupBinding
+import com.example.haonv.di.DIContainer.viewModelContainer
 import com.example.haonv.ui.auth.signin.SigninActivity
 
 
-class SignupActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignupBinding
-    private val signupViewModel: SignupViewModel by viewModels {
-        SignupViewModel.SignupViewModelFactory(application as App)
+class SignupActivity : BaseActivity<ActivitySignupBinding>() {
+    override fun inflateBinding(layoutInflater: LayoutInflater): ActivitySignupBinding {
+        return ActivitySignupBinding.inflate(layoutInflater)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val signupViewModel: SignupViewModel by lazy {
+        viewModelContainer.getViewModel(
+            this,
+            SignupViewModel::class.java
+        )
+    }
 
-        binding = ActivitySignupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        signupViewModel.signupState.observe(this, {
-            if (it) {
-                startActivity(Intent(this, SigninActivity::class.java))
-            }
-        })
-
-        signupViewModel.validationMessage.observe(this, {
-            binding.txtValidateSignUpUsername.text = it
-        })
-        signupViewModel.validationPasswordMessage.observe(this, {
-            binding.txtValidateSignUpPassword.text = it
-        })
-        signupViewModel.validationConfirmPasswordMessage.observe(this, {
-            binding.txtValidateSignUpConfirmPassword.text = it
-        })
-        signupViewModel.validationEmailMessage.observe(this, {
-            binding.txtValidateSignUpEmail.text = it
-        })
+    override fun setupListener() {
+        super.setupListener()
 
         binding.edtSignUpUsername.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -110,11 +97,7 @@ class SignupActivity : AppCompatActivity() {
             signupViewModel.checkSignup(username, password, email, confirmPassword, "012345678")
 
         }
-        setupPasswordToggles()
-        observePasswordVisibility()
-    }
 
-    private fun setupPasswordToggles() {
         binding.edtSignUpPassword.apply {
             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             setOnTouchListener { view, event ->
@@ -148,7 +131,31 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun observePasswordVisibility() {
+    override fun setupObserver() {
+        super.setupObserver()
+
+        signupViewModel.signupState.observe(this, {
+            if (it) {
+                startActivity(Intent(this, SigninActivity::class.java))
+            }
+        })
+
+        signupViewModel.validationMessage.observe(this, {
+            binding.txtValidateSignUpUsername.text = it
+        })
+
+        signupViewModel.validationPasswordMessage.observe(this, {
+            binding.txtValidateSignUpPassword.text = it
+        })
+
+        signupViewModel.validationConfirmPasswordMessage.observe(this, {
+            binding.txtValidateSignUpConfirmPassword.text = it
+        })
+
+        signupViewModel.validationEmailMessage.observe(this, {
+            binding.txtValidateSignUpEmail.text = it
+        })
+
         signupViewModel.passwordVisible.observe(this) { isVisible ->
             binding.edtSignUpPassword.apply {
                 transformationMethod = if (isVisible) {
